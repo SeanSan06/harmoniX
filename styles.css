@@ -1,15 +1,42 @@
+/* HTML and body area */
 html, body {
     display: flex;
     flex-direction: column;
+
     width: 100%;
     height: 100%;
+    margin: 0;
+    padding: 0;
 
     background-color: lightgray;
 }
 
+/* Nav bar area */
 #nav-bar-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
     width: 100%;
     height: 5vh;
+    margin: 0;
+    padding: 0;
 
     background-color: black;
+}
+
+#website-name-text {
+    color: white;
+}
+
+#nav-bar-area #navigation-links-subarea {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    width: 25%;
+}
+
+#nav-bar-area .navigation-text p {
+    color: white;
 }
