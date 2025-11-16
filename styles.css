@@ -1,0 +1,85 @@
+/* HTML and body area */
+html, body {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    background-color: lightgray;
+}
+
+/* Nav bar area */
+#nav-bar-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    width: 100%;
+    height: 4rem;
+    margin: 0;
+    padding: 0;
+
+    background-color: black;
+}
+
+#website-name-text {
+    font-size: 1.5rem;
+
+    color: white;
+}
+
+#nav-bar-area #navigation-links-subarea {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    width: 25%;
+}
+
+#nav-bar-area .navigation-text p {
+    font-size: 1.5rem;
+
+    color: white;
+}
+
+/* Main area */
+#main-area {
+    display: flex;
+    flex-direction: column;
+
+    height: calc(100% - 4rem);
+}
+
+/* Hero area */
+#hero-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+
+    height: calc(100vh - 4rem);
+
+    background-color: white;
+}
+
+#harmoniXfer-h1 {
+    font-size: 3rem;
+    padding: 8px;
+    border-radius: 8px;
+
+    background-color: green;
+}
+
+#transfer-song-button {
+    background-color: green;
+}
+
+#how-it-works-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
