@@ -82,8 +82,13 @@ html, body {
     margin-top: 0px;
 }
 
-#transfer-song-button {
-    background-color: green;
+#transfer-song-button { 
+    width: 12.5%;
+    aspect-ratio: 4/1;
+    border-radius: 8px;
+    font-size: 1.5rem;
+
+    background-color: rgb(0, 168, 0);
 }
 
 #how-it-works-area {
