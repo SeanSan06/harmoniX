@@ -93,23 +93,3 @@ html, body {
 }
 
 
-
-.marquee {
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    box-sizing: border-box;
-}
-
-.marquee span {
-    display: inline-block;
-    padding-right: 100%;
-    animation: marquee 4s linear infinite;
-}
-
-@keyframes marquee {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
-}
-
-
