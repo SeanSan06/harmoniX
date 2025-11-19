@@ -5,6 +5,7 @@ function sleep(ms) {
 window.addEventListener("load", () => {
     document.querySelector("#harmoniXfer-title").classList.add("animate");
     document.querySelector("#harmoniXfer-caption").classList.add("animate");
+    document.querySelector("#transfer-song-button").classList.add("animate");
 
     sleep(2000);
 });
