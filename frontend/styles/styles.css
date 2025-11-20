@@ -54,14 +54,17 @@ html, body {
 
 /* Hero area */
 #hero-area {
+    background-color: white;
+}
+
+#title-caption-button {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    align-items: center;
+    align-items: flex-start;
 
+    width: 100%;
     height: calc(100vh - 4rem);
-
-    background-color: white;
 }
 
 #title-sub-area {
@@ -72,15 +75,16 @@ html, body {
 
 #harmoniXfer-title {
     font-size: 8rem;
-    padding: 8px;
+    padding: 0px;
     border-radius: 8px;
     margin-bottom: 0px;
 
     transition: all 2s ease;
+    transform: translateX(calc(50vw - 50%));
 }
 
     #harmoniXfer-title.animate {
-        transform: translateX(-2em);
+        transform: translateX(1em);
         text-align: left;
     }
 
@@ -89,10 +93,11 @@ html, body {
     margin-top: 0px;
 
     transition: all 2s ease;
+    transform: translateX(calc(50vw - 100%));
 }
 
     #harmoniXfer-caption.animate {
-        transform: translateX(-8em);
+        transform: translateX(-1.9em);
         text-align: left;
     }
 
@@ -103,12 +108,13 @@ html, body {
     font-size: 1.5rem;
 
     transition: all 2s ease;
+    transform: translateX(calc(50vw - 50%));
 
     background-color: rgb(0, 168, 0);
 }
 
     #transfer-song-button.animate {
-        transform: translateX(-8em);
+        transform: translateX(6em);
     }
 
 /* How it works area */

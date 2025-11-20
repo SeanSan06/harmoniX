@@ -2,10 +2,11 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-window.addEventListener("load", () => {
+window.addEventListener("load", async () => {
+    await sleep(2000);
+
     document.querySelector("#harmoniXfer-title").classList.add("animate");
     document.querySelector("#harmoniXfer-caption").classList.add("animate");
     document.querySelector("#transfer-song-button").classList.add("animate");
-
-    sleep(2000);
+    document.querySelector("#title-caption-button").classList.add("animate");
 });
