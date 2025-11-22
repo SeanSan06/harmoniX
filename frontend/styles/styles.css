@@ -144,14 +144,19 @@ html, body {
 }
 
     #transfer-song-button.animate {
-        transform: translateX(6em);
+        transform: translateX(5.65em);
     }
 
 #image {
     width: 500px;
     height: 600px;
-    background-color: red;
 }
+
+    #image.appear {
+        width: 500px;
+        height: 600px;
+        background-color: red;
+    }
 
 /* How it works area */
 #how-it-works-area {
