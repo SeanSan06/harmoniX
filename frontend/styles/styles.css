@@ -1,4 +1,4 @@
-/* HTML and body area */
+/* ========== HTML and body area  ==========*/
 html, body {
     display: flex;
     flex-direction: column;
@@ -11,7 +11,9 @@ html, body {
     background-color: lightgray;
 }
 
-/* Nav bar area */
+
+
+/* ========== Nav bar area ========== */
 #nav-bar-area {
     display: flex;
     flex-direction: row;
@@ -46,13 +48,9 @@ html, body {
     color: white;
 }
 
-/* Content area */
-#content-area {
-    display: flex;
-    flex-direction: column;
-}
 
-/* Hero area */
+
+/* ========== Hero area ==========  */
 #hero-area {
     display: flex;
     flex-direction: row;
@@ -66,7 +64,7 @@ html, body {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: flex-start;
-
+    
     width: 60%;
     height: calc(100vh - 4rem);
 }
@@ -88,8 +86,9 @@ html, body {
 }
 
     #harmoniXfer-title.animate {
-        transform: translateX(1em);
         text-align: left;
+
+        transform: translateX(1em);
     }
 
     /* Jump animation for HarmonXfer title */
@@ -107,16 +106,17 @@ html, body {
         }
     }
 
-    #harmoniXfer-title span:nth-child(1) {animation-delay: 0.15s; }
-    #harmoniXfer-title span:nth-child(2) {animation-delay: 0.30s; }
-    #harmoniXfer-title span:nth-child(3) {animation-delay: 0.45s; }
-    #harmoniXfer-title span:nth-child(4) {animation-delay: 0.60s; }
-    #harmoniXfer-title span:nth-child(5) {animation-delay: 0.75s; }
-    #harmoniXfer-title span:nth-child(6) {animation-delay: 0.90s; }
-    #harmoniXfer-title span:nth-child(7) {animation-delay: 1.05s; }
-    #harmoniXfer-title span:nth-child(8) {animation-delay: 1.20s; }
-    #harmoniXfer-title span:nth-child(9) {animation-delay: 1.35s; }
-    #harmoniXfer-title span:nth-child(10) {animation-delay: 1.50s; }
+    #harmoniXfer-title span:nth-child(1) {animation-delay: 0.15s;}
+    #harmoniXfer-title span:nth-child(2) {animation-delay: 0.30s;}
+    #harmoniXfer-title span:nth-child(3) {animation-delay: 0.45s;}
+    #harmoniXfer-title span:nth-child(4) {animation-delay: 0.60s;}
+    #harmoniXfer-title span:nth-child(5) {animation-delay: 0.75s;}
+    #harmoniXfer-title span:nth-child(6) {animation-delay: 0.90s;}
+    #harmoniXfer-title span:nth-child(7) {animation-delay: 1.05s;}
+    #harmoniXfer-title span:nth-child(8) {animation-delay: 1.20s;}
+    #harmoniXfer-title span:nth-child(9) {animation-delay: 1.35s;}
+    #harmoniXfer-title span:nth-child(10) {animation-delay: 1.50s;}
+    #harmoniXfer-title span:nth-child(11) {animation-delay: 1.65s;}
 
 #harmoniXfer-caption {
     font-size: 2em;
@@ -170,8 +170,10 @@ html, body {
         }
     }
 
-/* How it works area */
-#how-it-works-area {
+
+
+/* ========== How it works area ========== */
+#transfer-songs-area {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -205,3 +207,7 @@ html, body {
 
     background-color: green;
 }
+
+
+
+/* ========== Footer area ========== */
