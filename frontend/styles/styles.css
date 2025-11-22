@@ -1,0 +1,215 @@
+/* ========== HTML and body area  ==========*/
+html, body {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    background-color: lightgray;
+}
+
+
+
+/* ========== Nav bar area ========== */
+#nav-bar-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    width: 100%;
+    height: 4rem;
+    margin: 0;
+    padding: 0;
+
+    background-color: black;
+}
+
+#website-name-text {
+    font-size: 1.5rem;
+
+    color: white;
+}
+
+#nav-bar-area #navigation-links-subarea {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    width: 25%;
+}
+
+#nav-bar-area .navigation-text p {
+    font-size: 1.5rem;
+
+    color: white;
+}
+
+
+
+/* ========== Hero area ==========  */
+#hero-area {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    background-color: white;
+}
+
+#title-caption-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    
+    width: 60%;
+    height: calc(100vh - 4rem);
+}
+
+#title-sub-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#harmoniXfer-title {
+    font-size: 8rem;
+    padding: 0px;
+    border-radius: 8px;
+    margin-bottom: 0px;
+
+    transition: all 2s ease;
+    transform: translateX(calc(50vw - 50%));
+}
+
+    #harmoniXfer-title.animate {
+        text-align: left;
+
+        transform: translateX(1em);
+    }
+
+    /* Jump animation for HarmonXfer title */
+    #harmoniXfer-title span {
+        display: inline-block;
+        animation: jump 0.5s ease-in-out 1;
+    }
+
+    @keyframes jump {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-24px);
+        }
+    }
+
+    #harmoniXfer-title span:nth-child(1) {animation-delay: 0.15s;}
+    #harmoniXfer-title span:nth-child(2) {animation-delay: 0.30s;}
+    #harmoniXfer-title span:nth-child(3) {animation-delay: 0.45s;}
+    #harmoniXfer-title span:nth-child(4) {animation-delay: 0.60s;}
+    #harmoniXfer-title span:nth-child(5) {animation-delay: 0.75s;}
+    #harmoniXfer-title span:nth-child(6) {animation-delay: 0.90s;}
+    #harmoniXfer-title span:nth-child(7) {animation-delay: 1.05s;}
+    #harmoniXfer-title span:nth-child(8) {animation-delay: 1.20s;}
+    #harmoniXfer-title span:nth-child(9) {animation-delay: 1.35s;}
+    #harmoniXfer-title span:nth-child(10) {animation-delay: 1.50s;}
+    #harmoniXfer-title span:nth-child(11) {animation-delay: 1.65s;}
+
+#harmoniXfer-caption {
+    font-size: 2em;
+    margin-top: 0px;
+
+    transition: all 2s ease;
+    transform: translateX(calc(50vw - 100%));
+}
+
+    #harmoniXfer-caption.animate {
+        transform: translateX(-1.35em);
+        text-align: left;
+    }
+
+#transfer-song-button { 
+    width: 12.5%;
+    aspect-ratio: 4/1;
+    border-radius: 8px;
+    font-size: 1.5rem;
+
+    transition: all 2s ease;
+    transform: translateX(calc(50vw - 50%));
+
+    background-color: rgb(0, 168, 0);
+}
+
+    #transfer-song-button.animate {
+        transform: translateX(5.65em);
+    }
+
+#image {
+    width: 500px;
+    height: 600px;
+}
+
+    /* Fade in */
+    #image.appear-fade-in {
+        width: 500px;
+        height: 600px;
+
+        animation: fadeIn 1.5s linear;
+    }
+
+    @keyframes fadeIn {
+        from {
+            background-color: white /* Start as white */
+        }
+        to {
+            background-color: red /* End as red */
+        }
+    }
+
+    /* Border animation */
+    #image {
+        border: 8px solid green;
+    }
+
+/* ========== How it works area ========== */
+#transfer-songs-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#card-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    width: 100%;
+}
+
+#youtube-to-spotify {
+    width: 22.5%;
+    aspect-ratio: 1/1.4;
+
+    background-color: red;
+}
+
+#database {
+    width: 22.5%;
+    aspect-ratio: 1/1.4;
+
+    background-color: rgb(255, 204, 0);
+}
+
+#spotify-to-youtube {
+    width: 22.5%;
+    aspect-ratio: 1/1.4;
+
+    background-color: green;
+}
+
+
+
+/* ========== Footer area ========== */
