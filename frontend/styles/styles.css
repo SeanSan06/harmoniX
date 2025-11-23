@@ -157,15 +157,17 @@ html, body {
     border-radius: 16px;
     position: relative;
 
-    background-color: aqua;
+    background-color: white;
 }
 
     /* Fade in */
-    /* #image.appear-fade-in {
+    #image.appear-fade-in {
         width: 500px;
         height: 600px;
 
         animation: fadeIn 1.5s linear;
+
+        background-color: green;
     }
 
     @keyframes fadeIn {
@@ -173,11 +175,10 @@ html, body {
             background-color: white;
         }
         to {
-            background-color: red;
+            background-color: green;
         }
-    } */
+    }
 
-    /* Border animation */
 
     /* Border animation */
     @property --angle {
@@ -191,14 +192,17 @@ html, body {
         position: absolute;
         height: 100%;
         width: 100%;
-        background-image: conic-gradient(from var(--angle), transparent 70%, red);
+        background-image: conic-gradient(from var(--angle), transparent 50%, yellow, orange, red);
         top: 50%;
         left: 50%;
         translate: -50% -50%;
         z-index: -1;
         border-radius: 16px;
         padding: 8px;
-        animation: 3s spin linear infinite;
+        animation: 5s spin linear infinite;
+
+        opacity: 0;
+        transition: opacity 3s linear;
     }
 
         @keyframes spin {
@@ -210,7 +214,12 @@ html, body {
             }
         }
 
-    #image::before {
+    #image.appear-fade-in::after, #image.appear-fade-in::before {
+        transition-delay: 1s;
+        opacity: 1;
+    }
+
+    #image.appear-fade-in::before {
         filter: blur(1.5rem);
         opacity: 0.5;
     }
