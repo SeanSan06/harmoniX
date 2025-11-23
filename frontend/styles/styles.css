@@ -183,7 +183,7 @@ html, body {
         position: absolute;
         height: 100%;
         width: 100%;
-        background-color: red;
+        background-image: conic-gradient(red, rgb(255, 191.5, 0), green, rgb(255, 191.5, 0), red);
         top: 50%;
         left: 50%;
         translate: -50% -50%;
