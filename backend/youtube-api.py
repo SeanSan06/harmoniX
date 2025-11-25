@@ -9,4 +9,33 @@ print(API_KEY)
 YOUTUBE = build("youtube", "v3", developerKey=API_KEY)
 print(YOUTUBE)
 
-playlist_id = "PLVultSzIpDeddhF35wB1WHtuaH_rSdbks"
+playlist_id = "######"
+
+def get_playlist_videos(playlist_id):
+    videos = []
+    next_page = None
+
+    while True:
+        response = YOUTUBE.playlistItems().list(
+            part = "snippet",
+            playlistId = playlist_id,
+            maxResults = 5,
+            pageToken = next_page
+        ).execute()
+
+        print(response)
+        print("\n\n")
+
+        for item in response["items"]:
+            title = item["snippet"]["title"]
+            video_id = item["snippet"]["resourceId"]["videoId"]
+            videos.append((title, video_id))
+
+        next_page = response.get("nextPageToken")
+        if not next_page:
+            break
+
+    return videos
+
+videos = get_playlist_videos(playlist_id)
+print("Videos: ", videos)
