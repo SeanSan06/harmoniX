@@ -11,7 +11,7 @@ print(YOUTUBE)
 
 playlist_id = "######"
 
-def get_playlist_videos(playlist_id):
+def get_playlist_videos_title(playlist_id):
     videos = []
     next_page = None
 
@@ -22,9 +22,6 @@ def get_playlist_videos(playlist_id):
             maxResults = 5,
             pageToken = next_page
         ).execute()
-
-        print(response)
-        print("\n\n")
 
         for item in response["items"]:
             title = item["snippet"]["title"]
@@ -37,5 +34,5 @@ def get_playlist_videos(playlist_id):
 
     return videos
 
-videos = get_playlist_videos(playlist_id)
+videos = get_playlist_videos_title(playlist_id)
 print("Videos: ", videos)
