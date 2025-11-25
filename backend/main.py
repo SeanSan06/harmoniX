@@ -1,10 +1,10 @@
 from fastapi import FastAPI                  # Backend Framework
-from fastapi.responses import CORSMiddleware # CORS header to allow specify headers only
+from fastapi.middleware.cors import CORSMiddleware # CORS header to allow specify headers only
 from fastapi.responses import FileResponse   # Send a specifc HTML, CSS, & JS file to broswer
 from fastapi.staticfiles import StaticFiles  # Serves a folder's files automatically
 from pydantic import BaseModel               # Helps with type check and type conversion
 
-import youtube_api as yt_api
+from backend.youtube_api import get_playlist_videos_title
 
 app = FastAPI()
 
@@ -28,7 +28,7 @@ class SpotifyToYoutube(BaseModel):
 """ Youtube API Endpoints """
 @app.get("/youtube_playlist/{playlist_id}")
 def playlist_endpoint(playlist_id: str):
-    return yt_api.get_playlist_videos_title(playlist_id)
+    return get_playlist_videos_title(playlist_id)
 
 """ Spotify API Endpoints """
 # @app.get("/spotify")

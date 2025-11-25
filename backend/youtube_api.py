@@ -4,12 +4,8 @@ from googleapiclient.discovery import build
 
 load_dotenv()
 API_KEY = os.getenv("YOUTUBE_API_KEY")
-print(API_KEY)
 
 YOUTUBE = build("youtube", "v3", developerKey=API_KEY)
-print(YOUTUBE)
-
-playlist_id = "######"
 
 def get_playlist_videos_title(playlist_id):
     videos = []
@@ -33,6 +29,3 @@ def get_playlist_videos_title(playlist_id):
             break
 
     return videos
-
-videos = get_playlist_videos_title(playlist_id)
-print("Videos: ", videos)
