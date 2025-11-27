@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HarmoniXfer</title>
-    <link rel="stylesheet" href="../styles/styles.css">
-    <script src="../javascript/index.js"></script>
+    <link rel="stylesheet" href="/static/styles/styles.css">
+    <script src="/static/javascript/main.js"></script>
 </head>
 <body>
     <!-- ========== Nav bar area ========== -->
@@ -45,9 +45,42 @@
     <div id="transfer-songs-area">
         <h2 id="transfer-songs-h2">Transfer Songs</h2>
         <div id="card-area">
-            <div class="card" id="youtube-to-spotify"></div>
-            <div class="card" id="database"></div>
-            <div class="card" id="spotify-to-youtube"></div>
+            <div class="card" id="youtube-to-spotify">
+                <div>
+                    <h3>Youtube to Spotify</h3>
+                </div>
+                <div class="text-box-button">
+                    <h4>Youtube Playlist ID</h4>
+                    <input class="text-box" id="youtube_playlist_id_1" type="text" name="youtube_playlist_id_1" placeholder="123ABC" required>
+                    <h4>Spotify Playlist ID</h4>
+                    <input class="text-box" id="spotify_playlist_id" type="text" name="spotify_playlist_id" placeholder="123ABC" required>
+                    <button id="youtube_to_spotify_button">Transfer</button>
+                </div>
+            </div>
+            <div class="card" id="database">
+                <div>
+                    <h3>Transfer between both</h3>
+                </div>
+                <div class="text-box-button">
+                    <h4>Youtube Playlist ID</h4>
+                    <input class="text-box" id="youtube_playlist_id_2" type="text" name="youtube_playlist_id_2" placeholder="123ABC" required>
+                    <h4>Spotify Playlist ID</h4>
+                    <input class="text-box" id="spotify_playlist_id" type="text" name="spotify_playlist_id" placeholder="123ABC" required>
+                    <button>Transfer</button>
+                </div>
+            </div>
+            <div class="card" id="spotify-to-youtube">
+                <div>
+                    <h3>Spotify to Youtube</h3>
+                </div>
+                <div class="text-box-button">
+                    <h4>Youtube Playlist ID</h4>
+                    <input class="text-box" id="youtube_playlist_id_3" type="text" name="youtube_playlist_id_3" placeholder="123ABC" required>
+                    <h4>Spotify Playlist ID</h4>
+                    <input class="text-box" id="spotify_playlist_id" type="text" name="spotify_playlist_id" placeholder="123ABC" required>
+                    <button>Transfer</button>
+                </div>
+            </div>
         </div>
     </div>
 
