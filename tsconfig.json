@@ -8,5 +8,3 @@
     },
     "include": ["frontend/ts/*.ts"]
 }
-
-

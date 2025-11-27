@@ -268,7 +268,13 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 16px;
 }
+
+.text-box-button h4 {
+    margin-bottom: 8px;
+}
+
 
 #card-area .card p {
     text-align: center;
