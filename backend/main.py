@@ -60,6 +60,22 @@ def login_spotify():
 
     return RedirectResponse(url)
 
+@app.get("/auth/callback")
+def callback(code : str):
+    payload = {
+        "grant_type": "authorization_code",
+        "code": code,
+        "redirect_uri": SPOTIFY_REDIRECT_URL,
+        "client_id": SPOTIFY_CLIENT_ID,
+        "client_secret": SPOTIFY_CLIENT_SECRET,
+    }
+
+    url = "https://accounts.spotify.com/api/token"
+    response = requests.post(url, data=payload)
+    data = response.json()
+
+    return data
+
 """ Serve Webpages"""
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
