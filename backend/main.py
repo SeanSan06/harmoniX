@@ -11,6 +11,16 @@ from urllib.parse import urlencode                 # Helps format URLs(Spotify r
 
 from backend.youtube_api import get_playlist_videos_title # My own file
 
+""" Spotify API Set up """
+load_dotenv()
+SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
+SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
+SPOTIFY_REDIRECT_URL = os.getenv("SPOTIFY_REDIRECT_URL")
+
+SPOTIFY_SCOPE = "playlist-modify-private playlist-modify-public"
+
+
+""" Fast API Set Up """
 app = FastAPI()
 
 app.add_middleware(
@@ -36,11 +46,21 @@ def get_youtube_playlist_video_title(youtube_playlist_id: str):
     return get_playlist_videos_title(youtube_playlist_id)
 
 """ Spotify API Endpoints """
-# @app.get("/spotify")
-# def home():
-#     return {"Spotify API"}
+@app.get("/spotify")
+def login_spotify():
+    parameters = {
+        "response_type": "code",
+        "client_id": SPOTIFY_CLIENT_ID,
+        "scope": SPOTIFY_SCOPE,
+        "redirect_uri": SPOTIFY_REDIRECT_URL,
+        "show_dialog": "true",
+    }
 
-# Serve Webpages
+    url = "https://accounts.spotify.com/authorize?" + urlencode(parameters)
+
+    return RedirectResponse(url)
+
+""" Serve Webpages"""
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
 @app.get("/")
