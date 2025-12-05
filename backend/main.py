@@ -1,11 +1,26 @@
-from fastapi import FastAPI                  # Backend Framework
+from dotenv import load_dotenv                     # Load the keys in the env file
+from fastapi import FastAPI                        # Backend Framework
 from fastapi.middleware.cors import CORSMiddleware # CORS header to allow specify headers only
-from fastapi.responses import FileResponse   # Send a specifc HTML, CSS, & JS file to broswer
-from fastapi.staticfiles import StaticFiles  # Serves a folder's files automatically
-from pydantic import BaseModel               # Helps with type check and type conversion
+from fastapi.responses import FileResponse         # Send a specifc HTML, CSS, & JS file to broswer
+from fastapi.responses import RedirectResponse     # Lets broswer know what URL to go to
+from fastapi.staticfiles import StaticFiles        # Serves a folder's files automatically
+import os                                          # Get environmental variables
+from pydantic import BaseModel                     # Helps with type check and type conversion
+import requests                                    # HTTP client used to make API requests(For Spotify)
+from urllib.parse import urlencode                 # Helps format URLs(Spotify reqs specifc URL formats)
 
-from backend.youtube_api import get_playlist_videos_title
+from backend.youtube_api import get_playlist_videos_title # My own file
 
+""" Spotify API Set up """
+load_dotenv()
+SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
+SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
+SPOTIFY_REDIRECT_URL = os.getenv("SPOTIFY_REDIRECT_URL")
+
+SPOTIFY_SCOPE = "playlist-modify-private playlist-modify-public"
+
+
+""" Fast API Set Up """
 app = FastAPI()
 
 app.add_middleware(
@@ -26,16 +41,42 @@ class SpotifyToYoutube(BaseModel):
     spotify_playlist_link: str
 
 """ Youtube API Endpoints """
-@app.get("/youtube_playlist/{playlist_id}")
-def playlist_endpoint(playlist_id: str):
-    return get_playlist_videos_title(playlist_id)
+@app.get("/youtube_playlist_id/{youtube_playlist_id}")
+def get_youtube_playlist_video_title(youtube_playlist_id: str):
+    return get_playlist_videos_title(youtube_playlist_id)
 
 """ Spotify API Endpoints """
-# @app.get("/spotify")
-# def home():
-#     return {"Spotify API"}
+@app.get("/spotify")
+def login_spotify():
+    parameters = {
+        "response_type": "code",
+        "client_id": SPOTIFY_CLIENT_ID,
+        "scope": SPOTIFY_SCOPE,
+        "redirect_uri": SPOTIFY_REDIRECT_URL,
+        "show_dialog": "true",
+    }
 
-# Serve Webpages
+    url = "https://accounts.spotify.com/authorize?" + urlencode(parameters)
+
+    return RedirectResponse(url)
+
+@app.get("/auth/callback")
+def callback(code : str):
+    payload = {
+        "grant_type": "authorization_code",
+        "code": code,
+        "redirect_uri": SPOTIFY_REDIRECT_URL,
+        "client_id": SPOTIFY_CLIENT_ID,
+        "client_secret": SPOTIFY_CLIENT_SECRET,
+    }
+
+    url = "https://accounts.spotify.com/api/token"
+    response = requests.post(url, data=payload)
+    data = response.json()
+
+    return data
+
+""" Serve Webpages"""
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
 @app.get("/")
