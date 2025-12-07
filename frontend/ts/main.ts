@@ -15,6 +15,9 @@ window.addEventListener("load", async () => {
 
     await sleep(900);
     document.querySelector("#image")!.classList.add("appear-fade-in");
+    document.querySelectorAll(".image-subarea").forEach(element => {
+        element.classList.add("appear-fade-in");
+    });
 });
 
 // Transfer button(gets titles of YouTube videos for now)

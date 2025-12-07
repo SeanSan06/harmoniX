@@ -165,6 +165,10 @@ html, body {
     background-color: white;
 }
 
+.image-subarea {
+    color: white;
+}
+
     /* Fade in */
     #image.appear-fade-in {
         width: 30vw;
@@ -175,12 +179,20 @@ html, body {
         background-color: green;
     }
 
+    .image-subarea.appear-fade-in {
+        animation: fadeIn 1.5s linear;
+
+        color: black;
+    }
+
     @keyframes fadeIn {
         from {
             background-color: white;
+            color: white;
         }
         to {
             background-color: green;
+            color: black;
         }
     }
 

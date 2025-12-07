@@ -23,6 +23,9 @@ window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function
     document.querySelector("#title-caption-button").classList.add("animate");
     yield sleep(900);
     document.querySelector("#image").classList.add("appear-fade-in");
+    document.querySelectorAll(".image-subarea").forEach(element => {
+        element.classList.add("appear-fade-in");
+    });
 }));
 // Transfer button(gets titles of YouTube videos for now)
 window.addEventListener("DOMContentLoaded", () => {
