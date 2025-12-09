@@ -47,7 +47,7 @@ html, body {
     font-size: 2rem;
 }
 
-#home p, #transfer p, #about p {
+#home p, #transfer p, #dashboard p, #about p {
     color: rgb(52, 226, 52);
 }
 
