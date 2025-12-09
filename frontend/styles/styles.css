@@ -172,6 +172,22 @@ html, body {
     background-color: white;
 }
 
+#statistics-grid {
+    display: grid;
+    flex: 1;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+#statistics-grid h3 {
+    margin: 0px;
+    border-radius: 8px;
+    font-size: 2rem;
+
+    background-color: lightgreen;
+}
+
 .statisics-subarea {
     color: white;
     text-align: center;
