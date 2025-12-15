@@ -125,12 +125,18 @@ html, body {
     #harmoniXfer-title span:nth-child(10) {animation-delay: 1.00s;}
     #harmoniXfer-title span:nth-child(11) {animation-delay: 1.10s;}
 
+#xInTitle {
+    color: green;
+}
+
 #harmoniXfer-caption {
     font-size: 2em;
     margin-top: 0px;
 
     transition: all 2s ease;
     transform: translateX(calc(50vw - 100%));
+
+    color: green;
 }
 
     #harmoniXfer-caption.animate {
@@ -159,7 +165,7 @@ html, body {
         transform: translateX(5.4em);
     }
 
-#statisics {
+#statistics {
     width: 30vw;
     height: 75vh;
     box-sizing: border-box;
@@ -172,7 +178,7 @@ html, body {
     background-color: white;
 }
 
-#statisics-title {
+#statistics-title {
     font-size: 4em;
     margin: 0px;
     text-decoration: underline;
@@ -195,19 +201,19 @@ html, body {
     text-align: center;
 }
 
-.statisics-subarea {
+.statistics-subarea {
     color: white;
     text-align: center;
 }
 
-.statisics-grid-subarea {
+.statistics-grid-subarea {
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 8px;
 }
 
-.statisics-grid-subarea p {
+.statistics-grid-subarea p {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -217,7 +223,7 @@ html, body {
 
     /* Fade in */
     /* Fade in for statistics box */
-    #statisics.appear-fade-in {
+    #statistics.appear-fade-in {
         width: 30vw;
         height: 75vh;
 
@@ -226,7 +232,7 @@ html, body {
         background-color: green;
     }
 
-    .statisics-subarea.appear-fade-in {
+    .statistics-subarea.appear-fade-in {
         animation: fadeIn 1.5s linear;
 
         color: black;
@@ -244,7 +250,7 @@ html, body {
     }
 
     /* Fade in for statistics the 6 sub boxes */
-    .statisics-grid-subarea.appear-fade-in {
+    .statistics-grid-subarea.appear-fade-in {
         animation: subareaFadeIn 1.5s linear;
 
         background-color: lightgreen;
@@ -272,7 +278,7 @@ html, body {
         inherits: false;
     }
 
-    #statisics::after, #statisics::before {
+    #statistics::after, #statistics::before {
         content: '';
         position: absolute;
         height: 100%;
@@ -299,12 +305,12 @@ html, body {
             }
         }
 
-    #statisics.appear-fade-in::after, #statisics.appear-fade-in::before {
+    #statistics.appear-fade-in::after, #statistics.appear-fade-in::before {
         transition-delay: 1s;
         opacity: 1;
     }
 
-    #statisics.appear-fade-in::before {
+    #statistics.appear-fade-in::before {
         filter: blur(1.5rem);
         opacity: 0.5;
     }

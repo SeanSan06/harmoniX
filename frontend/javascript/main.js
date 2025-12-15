@@ -24,11 +24,11 @@ window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function
     document.querySelector("#title-caption-button").classList.add("animate");
     // Fade in animations
     yield sleep(900);
-    document.querySelector("#statisics").classList.add("appear-fade-in");
-    document.querySelectorAll(".statisics-subarea").forEach(element => {
+    document.querySelector("#statistics").classList.add("appear-fade-in");
+    document.querySelectorAll(".statistics-subarea").forEach(element => {
         element.classList.add("appear-fade-in");
     });
-    document.querySelectorAll(".statisics-grid-subarea").forEach(element => {
+    document.querySelectorAll(".statistics-grid-subarea").forEach(element => {
         element.classList.add("appear-fade-in");
     });
 }));

@@ -16,11 +16,11 @@ window.addEventListener("load", async () => {
 
     // Fade in animations
     await sleep(900);
-    document.querySelector("#statisics")!.classList.add("appear-fade-in");
-    document.querySelectorAll(".statisics-subarea").forEach(element => {
+    document.querySelector("#statistics")!.classList.add("appear-fade-in");
+    document.querySelectorAll(".statistics-subarea").forEach(element => {
         element.classList.add("appear-fade-in");
     });
-    document.querySelectorAll(".statisics-grid-subarea").forEach(element => {
+    document.querySelectorAll(".statistics-grid-subarea").forEach(element => {
         element.classList.add("appear-fade-in");
     });
 });
