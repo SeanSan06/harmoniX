@@ -357,6 +357,7 @@ html, body {
 #card-title-youtube-to-spotify {
     width: 100%;
     text-align: center;
+    border-radius: 16px;
 
     background-color: red;
 }
@@ -364,6 +365,7 @@ html, body {
 #card-title-database {
     width: 100%;
     text-align: center;
+    border-radius: 16px;
 
     background-color: yellow;
 }
@@ -371,6 +373,7 @@ html, body {
 #card-title-spotify-to-youtube {
     width: 100%;
     text-align: center;
+    border-radius: 16px;
 
     background-color: green;
 }
@@ -400,20 +403,44 @@ html, body {
 
 #youtube-to-spotify {
     width: 25%;
+    border-radius: 16px;
 
     background-color: lightcoral;
 }
 
+#youtube_to_spotify_button {
+    width: 350px;
+    height: 32px;
+
+    background-color: red;
+}
+
 #database {
     width: 25%;
+    border-radius: 16px;
 
     background-color: lightyellow;
 }
 
+#database_button {
+    width: 350px;
+    height: 32px;
+
+    background-color: yellow;
+}
+
 #spotify-to-youtube {
     width: 25%;
+    border-radius: 16px;
 
     background-color: lightgreen;
+}
+
+#spotify-to-youtube-button {
+    width: 350px;
+    height: 32px;
+
+    background-color: green;
 }
 
 .text-box {
