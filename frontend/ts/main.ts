@@ -6,6 +6,7 @@ function sleep(ms: number): Promise<void> {
 
 // Home page animations upon loading
 window.addEventListener("load", async () => {
+    // Slide left animations
     console.log("Testing testing");
     await sleep(1600);
     document.querySelector("#harmoniXfer-title")!.classList.add("animate");
@@ -13,8 +14,15 @@ window.addEventListener("load", async () => {
     document.querySelector("#transfer-song-button")!.classList.add("animate");
     document.querySelector("#title-caption-button")!.classList.add("animate");
 
+    // Fade in animations
     await sleep(900);
-    document.querySelector("#image")!.classList.add("appear-fade-in");
+    document.querySelector("#statistics")!.classList.add("appear-fade-in");
+    document.querySelectorAll(".statistics-subarea").forEach(element => {
+        element.classList.add("appear-fade-in");
+    });
+    document.querySelectorAll(".statistics-grid-subarea").forEach(element => {
+        element.classList.add("appear-fade-in");
+    });
 });
 
 // Transfer button(gets titles of YouTube videos for now)
@@ -50,3 +58,11 @@ async function get_youtube_playlist_video_title(user_input: string) {
         console.error("Error fetching items:", error);
     }
 }
+
+// Clicking button scrols into song transfer area
+const scrollButton = document.getElementById("transfer-song-button") as HTMLButtonElement | null;
+const targetSection = document.getElementById("transfer-songs-area") as HTMLElement | null;
+
+scrollButton?.addEventListener("click", () => {
+    targetSection?.scrollIntoView({ behavior: "smooth" });
+});

@@ -47,7 +47,7 @@ html, body {
     font-size: 2rem;
 }
 
-#home p, #transfer p, #about p {
+#home p, #transfer p, #dashboard p, #about p {
     color: rgb(52, 226, 52);
 }
 
@@ -125,12 +125,18 @@ html, body {
     #harmoniXfer-title span:nth-child(10) {animation-delay: 1.00s;}
     #harmoniXfer-title span:nth-child(11) {animation-delay: 1.10s;}
 
+#xInTitle {
+    color: green;
+}
+
 #harmoniXfer-caption {
     font-size: 2em;
     margin-top: 0px;
 
     transition: all 2s ease;
     transform: translateX(calc(50vw - 100%));
+
+    color: green;
 }
 
     #harmoniXfer-caption.animate {
@@ -139,7 +145,7 @@ html, body {
     }
 
 #transfer-song-button { 
-    width: 12.5%;
+    width: 20%;
     aspect-ratio: 4/1;
     border-radius: 8px;
     font-size: 1.5rem;
@@ -148,25 +154,76 @@ html, body {
     transform: translateX(calc(50vw - 50%));
 
     background-color: rgb(0, 168, 0);
+    border: none;
+    outline: none;
+    box-shadow: none;
+    cursor: pointer;
+    color: white;
 }
 
     #transfer-song-button.animate {
         transform: translateX(5.4em);
     }
 
-#image {
+#statistics {
     width: 30vw;
     height: 75vh;
     box-sizing: border-box;
     padding: 8px;
     border-radius: 16px;
     position: relative;
+    display: flex;
+    flex-direction: column;
 
     background-color: white;
 }
 
+#statistics-title {
+    font-size: 4em;
+    margin: 0px;
+    text-decoration: underline;
+}
+
+#statistics-grid {
+    display: grid;
+    flex: 1;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 16px;
+
+    color: white;
+}
+
+#statistics-grid h3 {
+    margin: 0px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.statistics-subarea {
+    color: white;
+    text-align: center;
+}
+
+.statistics-grid-subarea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.statistics-grid-subarea p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    font-size: 2.5rem;
+}
+
     /* Fade in */
-    #image.appear-fade-in {
+    /* Fade in for statistics box */
+    #statistics.appear-fade-in {
         width: 30vw;
         height: 75vh;
 
@@ -175,14 +232,43 @@ html, body {
         background-color: green;
     }
 
+    .statistics-subarea.appear-fade-in {
+        animation: fadeIn 1.5s linear;
+
+        color: black;
+    }
+
     @keyframes fadeIn {
         from {
             background-color: white;
+            color: white;
         }
         to {
             background-color: green;
+            color: black;
         }
     }
+
+    /* Fade in for statistics the 6 sub boxes */
+    .statistics-grid-subarea.appear-fade-in {
+        animation: subareaFadeIn 1.5s linear;
+
+        background-color: lightgreen;
+        color: black;
+    }
+
+    @keyframes subareaFadeIn {
+        from {
+            background-color: white;
+            color: white;
+        }
+        to {
+            background-color: lightgreen;
+            color: black;
+        }
+    }
+
+
 
 
     /* Border animation */
@@ -192,7 +278,7 @@ html, body {
         inherits: false;
     }
 
-    #image::after, #image::before {
+    #statistics::after, #statistics::before {
         content: '';
         position: absolute;
         height: 100%;
@@ -219,12 +305,12 @@ html, body {
             }
         }
 
-    #image.appear-fade-in::after, #image.appear-fade-in::before {
+    #statistics.appear-fade-in::after, #statistics.appear-fade-in::before {
         transition-delay: 1s;
         opacity: 1;
     }
 
-    #image.appear-fade-in::before {
+    #statistics.appear-fade-in::before {
         filter: blur(1.5rem);
         opacity: 0.5;
     }
@@ -241,34 +327,69 @@ html, body {
     font-size: 4rem;
 }
 
-#how-it-works-area {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
 #card-area {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    box-sizing: border-box;
+    padding-bottom: 64px;
 
-    width: 100%;
+    width: 100vw;
+    height: 600px;
 }
 
 #card-area .card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     font-size: 2rem;
+}
+
+#card-title {
+    width: 100%;
+}
+
+.card-title h3 {
+    margin: 16px;
+}
+
+#card-title-youtube-to-spotify {
+    width: 100%;
+    text-align: center;
+    border-radius: 16px;
+
+    background-color: red;
+}
+
+#card-title-database {
+    width: 100%;
+    text-align: center;
+    border-radius: 16px;
+
+    background-color: yellow;
+}
+
+#card-title-spotify-to-youtube {
+    width: 100%;
+    text-align: center;
+    border-radius: 16px;
+
+    background-color: green;
 }
 
 .text-box-button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    justify-content: space-around;
+    flex: 1;
+}
+
+.text-box-pair {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .text-box-button h4 {
@@ -281,22 +402,43 @@ html, body {
 }
 
 #youtube-to-spotify {
-    width: 22.5%;
-    aspect-ratio: 1/1.4;
+    width: 25%;
+    border-radius: 16px;
+
+    background-color: lightcoral;
+}
+
+#youtube_to_spotify_button {
+    width: 350px;
+    height: 32px;
 
     background-color: red;
 }
 
 #database {
-    width: 22.5%;
-    aspect-ratio: 1/1.4;
+    width: 25%;
+    border-radius: 16px;
 
-    background-color: rgb(255, 204, 0);
+    background-color: lightyellow;
+}
+
+#database_button {
+    width: 350px;
+    height: 32px;
+
+    background-color: yellow;
 }
 
 #spotify-to-youtube {
-    width: 22.5%;
-    aspect-ratio: 1/1.4;
+    width: 25%;
+    border-radius: 16px;
+
+    background-color: lightgreen;
+}
+
+#spotify-to-youtube-button {
+    width: 350px;
+    height: 32px;
 
     background-color: green;
 }
@@ -306,8 +448,16 @@ html, body {
 }
 
 /* ========== How it works area ========== */
-#how-it-works-h2 {
-    
+#about-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+#about-h2 {
+    font-size: 4rem;
 }
 
 /* ========== Footer area ========== */

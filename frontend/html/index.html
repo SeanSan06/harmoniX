@@ -17,6 +17,7 @@
             <div class="navigation-text" id="home"><p>Home</p></div>
             <div class="navigation-text" id="transfer"><p>Transfer</p></div>
             <div class="navigation-text" id="about"><p>About</p></div>
+            <div class="navigation-text" id="dashboard"><p>Dashboard</p></div>
         </div>
     </div>
 
@@ -27,58 +28,98 @@
         <!-- Title caption and button subarea -->
         <div id="title-caption-button">
             <div  id="title-sub-area">
-                <h1 id="harmoniXfer-title"><span>H</span><span>a</span><span>r</span><span>m</span><span>o</span><span>n</span><span>i</span><span>X</span><span>f</span><span>e</span><span>r</span></h1>
+                <h1 id="harmoniXfer-title"><span>H</span><span>a</span><span>r</span><span>m</span><span>o</span><span>n</span><span>i</span><span id="xInTitle">X</span><span>f</span><span>e</span><span>r</span></h1>
                 <p id="harmoniXfer-caption">Syncing - Songs - Simplified</p>
             </div>
             <button id="transfer-song-button">Transfer Songs</button>
         </div>
 
-        <!-- Image subarea -->
-        <div id="image">
-            
+        <!-- statistics subarea -->
+        <div id="statistics">
+            <h2 class="statistics-subarea" id="statistics-title">Statistics</h2>
+            <div id="statistics-grid">
+                <div class="statistics-grid-subarea">
+                    <h3 class="statistics-grid-subarea">Songs Transfered</h3>
+                    <p>000</p>
+                </div>
+                <div class="statistics-grid-subarea">
+                    <h3 class="statistics-grid-subarea">Playlists Transfered</h3>
+                    <p>000</p>
+                </div>
+                <div class="statistics-grid-subarea">
+                    <h3 class="statistics-grid-subarea">Time Saved</h3>
+                    <p>0 hrs</p>
+                </div>
+                <div class="statistics-grid-subarea">
+                    <h3 class="statistics-grid-subarea">Avg Transfer Time</h3>
+                    <p>0 secs</p>
+                </div>
+                <div class="statistics-grid-subarea">
+                    <h3 class="statistics-grid-subarea">Popular Genres</h3>
+                    <p>Rock</p>
+                </div>
+                <div class="statistics-grid-subarea">
+                    <h3 class="statistics-grid-subarea">Time Period</h3>
+                    <p>2010s</p>
+                </div>
+            </div>
         </div>
     </div>
 
 
     
-    <!-- ========== How it works area ========== -->
+    <!-- ========== Transfer songs area ========== -->
     <div id="transfer-songs-area">
         <h2 id="transfer-songs-h2">Transfer Songs</h2>
         <div id="card-area">
             <div class="card" id="youtube-to-spotify">
-                <div>
+                <div class="card-title" id="card-title-youtube-to-spotify">
                     <h3>Youtube to Spotify</h3>
                 </div>
                 <div class="text-box-button">
-                    <h4>Youtube Playlist ID</h4>
-                    <input class="text-box" id="youtube_playlist_id_1" type="text" name="youtube_playlist_id_1" placeholder="123ABC" required>
-                    <h4>Spotify Playlist ID</h4>
-                    <input class="text-box" id="spotify_playlist_id" type="text" name="spotify_playlist_id" placeholder="123ABC" required>
+                    <div class="text-box-pair">
+                        <h4>Youtube Playlist ID</h4>
+                        <input class="text-box" id="youtube_playlist_id_1" type="text" name="youtube_playlist_id_1" placeholder="123ABC" required>
+                    </div>
+                    <div class="text-box-pair">
+                        <h4>Spotify Playlist ID</h4>
+                        <input class="text-box" id="spotify_playlist_id" type="text" name="spotify_playlist_id" placeholder="123ABC" required>
+                    </div>
                     <button id="youtube_to_spotify_button">Transfer</button>
                 </div>
             </div>
+
             <div class="card" id="database">
-                <div>
+                <div class="card-title" id="card-title-database">
                     <h3>Transfer between both</h3>
                 </div>
                 <div class="text-box-button">
-                    <h4>Youtube Playlist ID</h4>
-                    <input class="text-box" id="youtube_playlist_id_2" type="text" name="youtube_playlist_id_2" placeholder="123ABC" required>
-                    <h4>Spotify Playlist ID</h4>
-                    <input class="text-box" id="spotify_playlist_id" type="text" name="spotify_playlist_id" placeholder="123ABC" required>
-                    <button>Transfer</button>
+                    <div class="text-box-pair">
+                        <h4>Youtube Playlist ID</h4>
+                        <input class="text-box" id="youtube_playlist_id_2" type="text" name="youtube_playlist_id_2" placeholder="123ABC" required>
+                    </div>
+                    <div class="text-box-pair">
+                        <h4>Spotify Playlist ID</h4>
+                        <input class="text-box" id="spotify_playlist_id" type="text" name="spotify_playlist_id" placeholder="123ABC" required>
+                    </div>
+                    <button id="database_button">Transfer</button>
                 </div>
             </div>
+
             <div class="card" id="spotify-to-youtube">
-                <div>
+                <div class="card-title" id="card-title-spotify-to-youtube">
                     <h3>Spotify to Youtube</h3>
                 </div>
                 <div class="text-box-button">
-                    <h4>Youtube Playlist ID</h4>
-                    <input class="text-box" id="youtube_playlist_id_3" type="text" name="youtube_playlist_id_3" placeholder="123ABC" required>
-                    <h4>Spotify Playlist ID</h4>
-                    <input class="text-box" id="spotify_playlist_id" type="text" name="spotify_playlist_id" placeholder="123ABC" required>
-                    <button>Transfer</button>
+                    <div class="text-box-pair">
+                        <h4>Youtube Playlist ID</h4>
+                        <input class="text-box" id="youtube_playlist_id_3" type="text" name="youtube_playlist_id_3" placeholder="123ABC" required>
+                    </div>
+                    <div class="text-box-pair">
+                        <h4>Spotify Playlist ID</h4>
+                        <input class="text-box" id="spotify_playlist_id" type="text" name="spotify_playlist_id" placeholder="123ABC" required>
+                    </div>
+                    <button id="spotify-to-youtube-button">Transfer</button>
                 </div>
             </div>
         </div>
@@ -86,9 +127,29 @@
 
 
     
-    <!-- ========== How it works area ========== -->
-    <div id="how-it-works-area">
-        <h2 id="how-it-works-h2">How it works</h2>
+    <!-- ========== About area ========== -->
+    <div id="about-area">
+        <h2 id="about-h2">About</h2>
+        <div id="card-area">
+            <div class="card" id="youtube-to-spotify">
+                <div>
+                    <h3>The Goal</h3>
+                </div>
+
+            </div>
+            <div class="card" id="database">
+                <div>
+                    <h3>The Process</h3>
+                </div>
+
+            </div>
+            <div class="card" id="spotify-to-youtube">
+                <div>
+                    <h3>The Tech Stack</h3>
+                </div>
+
+            </div>
+        </div>
     </div>
 
 

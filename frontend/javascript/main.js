@@ -15,14 +15,22 @@ function sleep(ms) {
 }
 // Home page animations upon loading
 window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function* () {
+    // Slide left animations
     console.log("Testing testing");
     yield sleep(1600);
     document.querySelector("#harmoniXfer-title").classList.add("animate");
     document.querySelector("#harmoniXfer-caption").classList.add("animate");
     document.querySelector("#transfer-song-button").classList.add("animate");
     document.querySelector("#title-caption-button").classList.add("animate");
+    // Fade in animations
     yield sleep(900);
-    document.querySelector("#image").classList.add("appear-fade-in");
+    document.querySelector("#statistics").classList.add("appear-fade-in");
+    document.querySelectorAll(".statistics-subarea").forEach(element => {
+        element.classList.add("appear-fade-in");
+    });
+    document.querySelectorAll(".statistics-grid-subarea").forEach(element => {
+        element.classList.add("appear-fade-in");
+    });
 }));
 // Transfer button(gets titles of YouTube videos for now)
 window.addEventListener("DOMContentLoaded", () => {
@@ -55,4 +63,10 @@ function get_youtube_playlist_video_title(user_input) {
         }
     });
 }
+// Clicking button scrols into song transfer area
+const scrollButton = document.getElementById("transfer-song-button");
+const targetSection = document.getElementById("transfer-songs-area");
+scrollButton === null || scrollButton === void 0 ? void 0 : scrollButton.addEventListener("click", () => {
+    targetSection === null || targetSection === void 0 ? void 0 : targetSection.scrollIntoView({ behavior: "smooth" });
+});
 //# sourceMappingURL=main.js.map
