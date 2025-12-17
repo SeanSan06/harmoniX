@@ -30,6 +30,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+""" YouTube & Spotify Pydantic Obj Set Up """
 class YoutubeToSpotify(BaseModel):
     name: str
     youtube_playlist_link: str
@@ -40,10 +42,12 @@ class SpotifyToYoutube(BaseModel):
     password: str
     spotify_playlist_link: str
 
+
 """ Youtube API Endpoints """
 @app.get("/youtube_playlist_id/{youtube_playlist_id}")
 def get_youtube_playlist_video_title(youtube_playlist_id: str):
     return get_playlist_videos_title(youtube_playlist_id)
+
 
 """ Spotify API Endpoints """
 @app.get("/spotify")
@@ -72,9 +76,23 @@ def callback(code : str):
 
     url = "https://accounts.spotify.com/api/token"
     response = requests.post(url, data=payload)
-    data = response.json()
+    token_data = response.json()
 
-    return data
+    return token_data
+
+@app.get("/spotify/me")
+def get_spotify_user_account(spotfiy_access_token: str):
+    headers = {
+        "Authorization": f"Bearer {spotfiy_access_token}"
+    }
+
+    response = requests.get(
+        "https://api.spotify.com/v1/me",
+        headers = headers
+    )
+
+    return response
+
 
 """ Serve Webpages"""
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
