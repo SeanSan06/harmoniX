@@ -1,7 +1,7 @@
 from dotenv import load_dotenv                     # Load the keys in the env file
 from fastapi import FastAPI                        # Backend Framework
 from fastapi.middleware.cors import CORSMiddleware # CORS header to allow specify headers only
-from fastapi import Body, Header                         # Helps format data sent to Spotify API
+from fastapi import Body, Header                   # Helps format data sent to Spotify API
 from fastapi.responses import FileResponse         # Send a specifc HTML, CSS, & JS file to broswer
 from fastapi.responses import RedirectResponse     # Lets broswer know what URL to go to
 from fastapi.staticfiles import StaticFiles        # Serves a folder's files automatically
@@ -80,9 +80,9 @@ def callback(code : str):
 
     url = "https://accounts.spotify.com/api/token"
     response = requests.post(url, data=payload)
-    token_data = response.json()
+    user_token_data = response.json()
 
-    return token_data
+    return user_token_data
 
 @app.get("/spotify/me")
 def get_spotify_user_account(spotfiy_access_token: str = Header(...)):
@@ -121,7 +121,7 @@ def create_spotify_playlist(
 
     return response.json()
 
-@app.get("/spotify/create-playlist")
+@app.get("/spotify/song-uri")
 def get_spotify_uri(
     query_song_name: str,
     spotfiy_access_token: str = Header(...)
@@ -147,8 +147,8 @@ def get_spotify_uri(
 
 @app.post("/spotify/add-songs")
 def add_songs_to_spotify_playlist(
-    playlist_id: str,
-    spotify_song_URI_obj: SpotifySongURI = Body(...),
+    spotify_playlist_id: str,
+    spotify_song_track_URI_obj: SpotifySongURI = Body(...),
     spotfiy_access_token: str = Header(...)
 ):
     headers = {
@@ -157,11 +157,11 @@ def add_songs_to_spotify_playlist(
     }
 
     payload = {
-        "uris": spotify_song_URI_obj.track_uris
+        "uris": spotify_song_track_URI_obj.track_uris
     }
 
     response = requests.post(
-        f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks",
+        f"https://api.spotify.com/v1/playlists/{spotify_playlist_id}/tracks",
         headers = headers,
         json = payload
     )
