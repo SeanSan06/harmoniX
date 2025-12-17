@@ -118,6 +118,30 @@ def create_spotify_playlist(
 
     return response.json()
 
+@app.get("/spotify/create-playlist")
+def get_spotify_uri(
+    query_song_name: str,
+    spotfiy_access_token: str = Header(...)
+):
+    headers = {
+        "Authorization": f"Bearer {spotfiy_access_token}",
+        "Content-Type": "application/json"
+    }
+
+    params = {
+        "q": query_song_name,
+        "type": "track",
+        "limit": 1
+    }
+
+    response = requests.get(
+        "https://api.spotify.com/v1/search",
+        headers = headers,
+        params = params
+    )
+
+    return response.json()
+
 
 """ Serve Webpages"""
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
