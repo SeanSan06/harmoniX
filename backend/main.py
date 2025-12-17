@@ -1,7 +1,7 @@
 from dotenv import load_dotenv                     # Load the keys in the env file
 from fastapi import FastAPI                        # Backend Framework
 from fastapi.middleware.cors import CORSMiddleware # CORS header to allow specify headers only
-from fastapi import Header                         # Helps format data sent to Spotify API
+from fastapi import Body, Header                         # Helps format data sent to Spotify API
 from fastapi.responses import FileResponse         # Send a specifc HTML, CSS, & JS file to broswer
 from fastapi.responses import RedirectResponse     # Lets broswer know what URL to go to
 from fastapi.staticfiles import StaticFiles        # Serves a folder's files automatically
@@ -42,6 +42,9 @@ class SpotifyToYoutube(BaseModel):
     username: str
     password: str
     spotify_playlist_link: str
+
+class SpotifySongURI(BaseModel):
+    track_uris: list[str]
 
 
 """ Youtube API Endpoints """
@@ -111,7 +114,7 @@ def create_spotify_playlist(
     }
 
     response = requests.post(
-        f"https://api.spotify.com/v1/me/playlists",
+        "https://api.spotify.com/v1/me/playlists",
         headers = headers,
         json = payload
     )
@@ -138,6 +141,29 @@ def get_spotify_uri(
         "https://api.spotify.com/v1/search",
         headers = headers,
         params = params
+    )
+
+    return response.json()
+
+@app.post("/spotify/add-songs")
+def add_songs_to_spotify_playlist(
+    playlist_id: str,
+    spotify_song_URI_obj: SpotifySongURI = Body(...),
+    spotfiy_access_token: str = Header(...)
+):
+    headers = {
+        "Authorization": f"Bearer {spotfiy_access_token}",
+        "Content-Type": "application/json"
+    }
+
+    payload = {
+        "uris": spotify_song_URI_obj.track_uris
+    }
+
+    response = requests.post(
+        f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks",
+        headers = headers,
+        json = payload
     )
 
     return response.json()
