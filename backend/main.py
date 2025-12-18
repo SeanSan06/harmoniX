@@ -18,7 +18,12 @@ SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
 SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
 SPOTIFY_REDIRECT_URL = os.getenv("SPOTIFY_REDIRECT_URL")
 
-SPOTIFY_SCOPE = "playlist-modify-private playlist-modify-public"
+SPOTIFY_SCOPE = (
+    "playlist-modify-private "
+    "playlist-modify-public "
+    "playlist-read-private "
+    "playlist-read-collaborative"
+)
 
 
 """ Fast API Set Up """
@@ -121,7 +126,23 @@ def create_spotify_playlist(
 
     return response.json()
 
-@app.get("/spotify/song-uri")
+@app.get("/spotify/get-playlist-id")
+def get_spotify_playlist_id(
+    spotfiy_access_token: str = Header(...)
+):
+    headers = {
+        "Authorization": f"Bearer {spotfiy_access_token}",
+        "Content-Type": "application/json"
+    }
+
+    response = requests.get(
+        "https://api.spotify.com/v1/me/playlists",
+        headers = headers,
+    )
+
+    return response.json()
+
+@app.get("/spotify/get-song-uri")
 def get_spotify_uri(
     query_song_name: str,
     spotfiy_access_token: str = Header(...)
