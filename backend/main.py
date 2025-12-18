@@ -215,10 +215,16 @@ def youtube_to_spotify(
     mySongURI = get_spotify_uri("Shape of You", myToken)
 
     # Find the matching Spotify playlist ID given the playlist's title
+    matching_playlist_id = ""
+    all_spotify_playlist_info = get_spotify_playlist_id(myToken)["items"]
+    for playlist_info in all_spotify_playlist_info:
+        if(playlist_info["name"] == spotify_playlist_name):
+            matching_playlist_id = playlist_info["id"]
+        
     # Place each song using its URI into the existing playlist
 
 
-    return my_list, myToken, mySongURI["tracks"]["items"][0]["uri"]
+    return my_list, myToken, mySongURI["tracks"]["items"][0]["uri"], matching_playlist_id
 
 
 """ Serve Webpages"""
