@@ -61,6 +61,7 @@ def get_youtube_playlist_video_title(
 
 
 """ Spotify API Endpoints """
+user_spotify_token = []
 @app.get("/spotify")
 def login_spotify():
     parameters = {
@@ -90,7 +91,8 @@ def callback(
     url = "https://accounts.spotify.com/api/token"
     response = requests.post(url, data=payload)
     user_token_data = response.json()
-
+    
+    user_spotify_token.append(user_token_data)
     return user_token_data
 
 @app.get("/spotify/me")
@@ -206,7 +208,15 @@ def youtube_to_spotify(
     for listIndex in YTlist:
         my_list.append(listIndex[0])
 
-    return my_list
+    # Get Spotify auth token
+    myToken = user_spotify_token
+
+    # For each song title try to get its Spotify URI
+    # Find the matching Spotify playlist ID given the playlist's title
+    # Place each song using its URI into the existing playlist
+
+
+    return my_list, myToken
 
 
 """ Serve Webpages"""
