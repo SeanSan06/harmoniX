@@ -5,6 +5,7 @@ from fastapi import Body, Header                   # Helps format data sent to S
 from fastapi.responses import FileResponse         # Send a specifc HTML, CSS, & JS file to broswer
 from fastapi.responses import RedirectResponse     # Lets broswer know what URL to go to
 from fastapi.staticfiles import StaticFiles        # Serves a folder's files automatically
+import math                                        # Use the celing method to round
 import os                                          # Get environmental variables
 from pydantic import BaseModel                     # Helps with type check and type conversion
 import requests                                    # HTTP client used to make API requests(For Spotify)
@@ -237,7 +238,17 @@ def youtube_to_spotify(
         spotfiy_access_token = user_spotify_token_local
     )
 
-    return {"sucess": f"{len(song_uri_list)} songs have been transfered!"}
+    songs_transferred = len(song_uri_list)
+    yt_calls = math.ceil(songs_transferred / 50)
+    spotify_calls = songs_transferred + 4
+
+    return {
+        "success": (
+            f"{songs_transferred} songs have been transferred, "
+            f"{yt_calls} YouTube API calls made, and "
+            f"{spotify_calls} Spotify API calls made!"
+        )
+    }
     # Important variables "yt_songs_title_list, user_spotify_token_local, song_uri_list, spotify_playlist_id"
 
 
