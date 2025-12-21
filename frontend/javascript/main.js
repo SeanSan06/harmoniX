@@ -40,12 +40,15 @@ window.addEventListener("DOMContentLoaded", () => {
             throw new Error(`Element not found: ${selector}`);
         return el;
     }
-    const inputTextBox = qs("#youtube_playlist_id_1");
+    const youtubeInputTextBox = qs("#youtube_playlist_id_1");
+    const spotifyInputTextBox = qs("#spotify_playlist_id_1");
     const button = qs("#youtube_to_spotify_button");
     button === null || button === void 0 ? void 0 : button.addEventListener("click", () => {
-        const user_input = inputTextBox.value;
-        console.log("user tpyed in box", user_input);
-        get_youtube_playlist_video_title(user_input);
+        const youtubeUserInput = youtubeInputTextBox.value;
+        const spotifyUserInput = spotifyInputTextBox.value;
+        console.log("user tpyed in box", youtubeUserInput);
+        console.log("user tpyed in box", spotifyUserInput);
+        get_youtube_playlist_video_title(youtubeUserInput);
     });
 });
 function get_youtube_playlist_video_title(user_input) {
