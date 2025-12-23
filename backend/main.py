@@ -98,7 +98,7 @@ def callback(
     user_token_data = response.json()
     
     user_spotify_token.append(user_token_data)
-    return user_token_data
+    return RedirectResponse("/")
 
 @app.get("/spotify/me")
 def get_spotify_user_account(

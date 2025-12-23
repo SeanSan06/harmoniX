@@ -38,6 +38,11 @@ window.addEventListener("DOMContentLoaded", () => {
     const button = qs<HTMLButtonElement>("#youtube_to_spotify_button")!;
 
     button?.addEventListener("click", () => {
+        window.location.href = "http://127.0.0.1:8000/spotify"
+    });
+
+
+    button?.addEventListener("click", () => {
         const youtubeUserInput = youtubeInputTextBox.value;
         const spotifyUserInput = spotifyInputTextBox.value;
         console.log("user typed in box", youtubeUserInput);
