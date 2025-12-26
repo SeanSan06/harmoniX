@@ -12,6 +12,8 @@ import requests                                    # HTTP client used to make AP
 from urllib.parse import urlencode                 # Helps format URLs(Spotify reqs specifc URL formats)
 
 from backend.youtube_api import get_playlist_videos_title # My own file
+from database import get_connection, create_tables, set_table_id
+
 
 """ Spotify API Set up """
 load_dotenv()
@@ -27,8 +29,11 @@ SPOTIFY_SCOPE = (
 )
 
 
-""" Fast API Set Up """
+""" Fast API Set Up and Database Connection"""
 app = FastAPI()
+create_tables()
+set_table_id()
+DATA_BASE = "statistics.db"
 
 app.add_middleware(
     CORSMiddleware,
@@ -244,21 +249,46 @@ def youtube_to_spotify(
         spotfiy_access_token = user_spotify_token_local
     )
 
+    # Calcualte data
     songs_transferred = len(song_uri_list)
     yt_calls = math.ceil(songs_transferred / 50)
     spotify_calls = songs_transferred + 4
+    total_time_saved = (songs_transferred * 20) - (songs_transferred * 5)
+    avg_time_per_song = 3
+
+    # Put data into SQLite database
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute(""" 
+        INSERT INTO statistics (
+            total_songs_transferred,
+            total_playlists_transferred,
+            total_time_saved,
+            avg_time_per_song
+        ) VALUES (?, ?, ?, ?)
+        """, (
+            songs_transferred,
+            1,
+            total_time_saved,
+            avg_time_per_song,
+        )
+    )
+    connection.commit()
+    connection.close()
 
     return {
         "success": (
-            f"{songs_transferred} songs have been transferred, "
-            f"{yt_calls} YouTube API calls made, and "
+            f"{songs_transferred} songs have been transferred!"
+            f"{yt_calls} YouTube API calls made!"
             f"{spotify_calls} Spotify API calls made!"
+            f"{total_time_saved} Time Saved!"
+            f"{avg_time_per_song} Average Time to Transfer a Song!"
         )
     }
     # Important variables "yt_songs_title_list, user_spotify_token_local, song_uri_list, spotify_playlist_id"
 
 
-""" Serve Webpages"""
+""" Serve Webpages """
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
 @app.get("/")

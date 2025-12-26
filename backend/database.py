@@ -24,3 +24,14 @@ def create_tables():
     
     connection.commit()
     connection.close()
+
+def set_table_id():
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        INSERT OR IGNORE INTO statistics (id) VALUES (1)
+    """)
+    
+    connection.commit()
+    connection.close()
