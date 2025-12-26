@@ -12,7 +12,7 @@ import requests                                    # HTTP client used to make AP
 from urllib.parse import urlencode                 # Helps format URLs(Spotify reqs specifc URL formats)
 
 from backend.youtube_api import get_playlist_videos_title # My own file
-from database import get_connection, create_tables, set_table_id
+from backend.database import get_connection, create_tables, set_table_id
 
 
 """ Spotify API Set up """
@@ -254,25 +254,35 @@ def youtube_to_spotify(
     yt_calls = math.ceil(songs_transferred / 50)
     spotify_calls = songs_transferred + 4
     total_time_saved = (songs_transferred * 20) - (songs_transferred * 5)
-    avg_time_per_song = 3
+    avg_time_per_song = total_time_saved/songs_transferred
 
     # Put data into SQLite database
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute(""" 
-        INSERT INTO statistics (
-            total_songs_transferred,
-            total_playlists_transferred,
-            total_time_saved,
-            avg_time_per_song
-        ) VALUES (?, ?, ?, ?)
-        """, (
-            songs_transferred,
-            1,
-            total_time_saved,
-            avg_time_per_song,
-        )
+        UPDATE statistics
+        SET
+            total_songs_transferred_field = total_songs_transferred_field + ?,
+            total_playlists_transferred_field = total_playlists_transferred_field + ?,
+            total_time_saved_field = total_time_saved_field + ?
+        WHERE id_field = 1
+    """, (
+        songs_transferred,
+        1,
+        total_time_saved,
     )
+    )
+    cursor.execute("""
+    
+        UPDATE statistics
+        SET avg_time_per_song_field = 
+            CASE
+                WHEN total_songs_transferred_field > 0
+                THEN total_time_saved_field / total_songs_transferred_field
+                ELSE 0
+            END
+        WHERE id_field = 1
+    """)
     connection.commit()
     connection.close()
 

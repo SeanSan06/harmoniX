@@ -14,11 +14,11 @@ def create_tables():
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS statistics (
-            id INTEGER PRIMARY KEY CHECK (id = 1),
-            total_songs_transferred INTEGER NOT NULL DEFAULT 0,
-            total_playlists_transferred INTEGER NOT NULL DEFAULT 0,
-            total_time_saved REAL NOT NULL DEFAULT 0,
-            avg_time_per_song REAL NOT NULL DEFAULT 0
+            id_field INTEGER PRIMARY KEY CHECK (id_field = 1),
+            total_songs_transferred_field INTEGER NOT NULL DEFAULT 0,
+            total_playlists_transferred_field INTEGER NOT NULL DEFAULT 0,
+            total_time_saved_field REAL NOT NULL DEFAULT 0,
+            avg_time_per_song_field REAL NOT NULL DEFAULT 0
         )          
     """)
     
@@ -30,7 +30,7 @@ def set_table_id():
     cursor = connection.cursor()
 
     cursor.execute("""
-        INSERT OR IGNORE INTO statistics (id) VALUES (1)
+        INSERT OR IGNORE INTO statistics (id_field) VALUES (1)
     """)
     
     connection.commit()
