@@ -39,6 +39,7 @@ html, body {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    gap: 32px;
 
     width: 25%;
 }
