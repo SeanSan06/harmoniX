@@ -353,6 +353,7 @@ html, body {
 
 .card-title h3 {
     margin: 16px;
+    color: white;
 }
 
 #card-title-youtube-to-spotify {
@@ -360,7 +361,7 @@ html, body {
     text-align: center;
     border-radius: 16px;
 
-    background-color: red;
+    background-color: rgb(125, 0, 0);
 }
 
 #card-title-database {
@@ -368,7 +369,7 @@ html, body {
     text-align: center;
     border-radius: 16px;
 
-    background-color: yellow;
+    background-color: rgb(170, 155, 0);
 }
 
 #card-title-spotify-to-youtube {
@@ -376,7 +377,7 @@ html, body {
     text-align: center;
     border-radius: 16px;
 
-    background-color: green;
+    background-color: rgb(0, 125, 15);
 }
 
 .text-box-button {
@@ -395,6 +396,7 @@ html, body {
 
 .text-box-button h4 {
     margin-bottom: 8px;
+    color: white;
 }
 
 
