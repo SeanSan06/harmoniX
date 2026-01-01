@@ -289,6 +289,10 @@ def youtube_to_spotify(
         spotfiy_access_token = user_spotify_token_local
     )
 
+    genres_list = []
+    for item in genres:
+        genres_list.extend(item["genres"])
+
     # Calcualte data
     songs_transferred = len(song_uri_list)
     yt_calls = math.ceil(songs_transferred / 50)
@@ -326,7 +330,7 @@ def youtube_to_spotify(
     connection.commit()
     connection.close()
 
-    return genres
+    return genres_list
     # return {
     #     "success": (
     #         f"{songs_transferred} songs have been transferred!"
