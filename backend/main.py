@@ -339,7 +339,7 @@ def youtube_to_spotify(
             INSERT INTO genres (genre_name, genre_count)
             VALUES (?, ?)
             ON CONFLICT(genre_name)
-            DO UPDATE SET genre_count = excluded.genre_count
+            DO UPDATE SET genre_count = genre_count + excluded.genre_count
         """, (
             genre_key,
             genre_value
@@ -379,6 +379,21 @@ def get_values_database():
     connection.close()
     
     return data
+
+@app.get("/database-genres")
+def get_genres_database():
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute("""
+        SELECT genre_name, genre_count
+        FROM genres
+        ORDER BY genre_count DESC
+        LIMIT 1
+    """)
+    genre_pair_data = cursor.fetchone()
+    connection.close()
+    
+    return genre_pair_data
 
 """ Serve Webpages """
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
