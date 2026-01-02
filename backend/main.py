@@ -307,6 +307,8 @@ def youtube_to_spotify(
     # Put data into SQLite database
     connection = get_connection()
     cursor = connection.cursor()
+
+    ## Statistics Data
     cursor.execute(""" 
         UPDATE statistics
         SET
@@ -321,7 +323,6 @@ def youtube_to_spotify(
     )
     )
     cursor.execute("""
-    
         UPDATE statistics
         SET avg_time_per_song_field = 
             CASE
@@ -331,19 +332,33 @@ def youtube_to_spotify(
             END
         WHERE id_field = 1
     """)
+
+    ## Genre Data
+    for genre_key, genre_value in genre_counter.items():
+        cursor.execute("""
+            INSERT INTO genres (genre_name, genre_count)
+            VALUES (?, ?)
+            ON CONFLICT(genre_name)
+            DO UPDATE SET genre_count = excluded.genre_count
+        """, (
+            genre_key,
+            genre_value
+        )
+        )
+
     connection.commit()
     connection.close()
 
-    return genre_counter
-    # return {
-    #     "success": (
-    #         f"{songs_transferred} songs have been transferred!"
-    #         f"{yt_calls} YouTube API calls made!"
-    #         f"{spotify_calls} Spotify API calls made!"
-    #         f"{total_time_saved} Time Saved!"
-    #         f"{avg_time_per_song} Average Time to Transfer a Song!"
-    #     )
-    # }
+    # return genre_counter
+    return {
+        "success": (
+            f"{songs_transferred} songs have been transferred!"
+            f"{yt_calls} YouTube API calls made!"
+            f"{spotify_calls} Spotify API calls made!"
+            f"{total_time_saved} Time Saved!"
+            f"{avg_time_per_song} Average Time to Transfer a Song!"
+        )
+    }
     # Important variables "yt_songs_title_list, user_spotify_token_local, song_uri_list, spotify_playlist_id, genre_counter"
 
 """ Database endpoints """
