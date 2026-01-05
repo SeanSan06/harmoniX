@@ -293,7 +293,8 @@ def youtube_to_spotify(
     genre_counter = Counter()
 
     for item in genres:
-        genre_counter.update(item["genres"])
+        for genre in item["genres"]:
+            genre_counter.update([genre.capitalize()])
 
     genre_counter = dict(genre_counter)
 
