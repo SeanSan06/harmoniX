@@ -1,9 +1,16 @@
 from pydantic import BaseModel                     # Helps with type check and type conversion
 import os                                          # Get environmental variables
+from fastapi.middleware.cors import CORSMiddleware # CORS header to allow specify headers only
 from dotenv import load_dotenv                     # Load the keys in the env file
+from fastapi import FastAPI                        # Backend Framework
 from fastapi import Body, Header                   # Helps format data sent to Spotify API
 import requests                                    # HTTP client used to make API requests(For Spotify)
 from urllib.parse import urlencode                 # Helps format URLs(Spotify reqs specifc URL formats)
+from collections import Counter
+from fastapi.responses import JSONResponse
+from backend.database import get_connection
+import math
+from backend.database import get_connection, create_tables, set_table_id
 
 
 """ Spotify API Set up """
@@ -11,6 +18,20 @@ load_dotenv()
 SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
 SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
 SPOTIFY_REDIRECT_URL = os.getenv("SPOTIFY_REDIRECT_URL")
+
+
+""" Fast API Set Up and Database Connection"""
+app = FastAPI()
+create_tables()
+set_table_id()
+DATA_BASE = "statistics.db"
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 """ Spotify Pydantic Obj Set Up """
@@ -168,7 +189,7 @@ def add_songs_to_spotify_playlist_helper(
 
     return response.json()
 
-def get_genres_of_songs(
+def get_genres_of_songs_helper(
     spotify_song_track_URI_obj: SpotifySongURI = Body(...),
     spotfiy_access_token: str = Header(...)
 ):
@@ -198,3 +219,5 @@ def get_genres_of_songs(
         results.append({
             "genres": artist_response.get("genres", [])
         })
+
+    return results
