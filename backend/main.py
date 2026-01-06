@@ -4,6 +4,7 @@ from fastapi import FastAPI                        # Backend Framework
 from fastapi.middleware.cors import CORSMiddleware # CORS header to allow specify headers only
 from fastapi import Body, Header                   # Helps format data sent to Spotify API
 from fastapi.responses import FileResponse         # Send a specifc HTML, CSS, & JS file to broswer
+from fastapi.responses import JSONResponse         # Send JSON objs to the front-end
 from fastapi.responses import RedirectResponse     # Lets broswer know what URL to go to
 from fastapi.staticfiles import StaticFiles        # Serves a folder's files automatically
 import math                                        # Use the celing method to round
@@ -255,7 +256,12 @@ def youtube_to_spotify(
     for list_index in yt_playlist_video_information:
         yt_songs_title_list.append(list_index)
 
-    # Get Spotify user's auth token
+    # Get Spotify user's auth token, redirect user back until Spotify token is recieved
+    if not user_spotify_token:
+        return JSONResponse(
+            status_code=401,
+            content={"error": "Not authenticated"}
+        )
     user_spotify_token_local = user_spotify_token[0]["access_token"]
 
     # For each song title get its Spotify URI and avoids crashes if Spotify API finds nothing
