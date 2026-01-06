@@ -13,7 +13,7 @@ from pydantic import BaseModel                     # Helps with type check and t
 import requests                                    # HTTP client used to make API requests(For Spotify)
 from urllib.parse import urlencode                 # Helps format URLs(Spotify reqs specifc URL formats)
 
-from backend.youtube_api import get_playlist_videos_title # My own file
+from backend.youtube_api import get_playlist_videos_title # Local file
 from backend.database import get_connection, create_tables, set_table_id
 
 
@@ -256,7 +256,7 @@ def youtube_to_spotify(
     for list_index in yt_playlist_video_information:
         yt_songs_title_list.append(list_index)
 
-    # Get Spotify user's auth token, redirect user back until Spotify token is recieved
+    # Get Spotify user's auth token, redirect user back to get Spotify token
     if not user_spotify_token:
         return JSONResponse(
             status_code=401,
@@ -368,6 +368,7 @@ def youtube_to_spotify(
     }
     # Important variables "yt_songs_title_list, user_spotify_token_local, song_uri_list, spotify_playlist_id, genre_counter"
 
+
 """ Database endpoints """
 @app.get("/database")
 def get_values_database():
@@ -403,6 +404,7 @@ def get_genres_database():
     connection.close()
     
     return genre_pair_data
+
 
 """ Serve Webpages """
 app.mount("/static", StaticFiles(directory="frontend"), name="static")

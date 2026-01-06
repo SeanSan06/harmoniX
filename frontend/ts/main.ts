@@ -97,11 +97,12 @@ interface PopularGenre {
 
 // Transfer button
 window.addEventListener("DOMContentLoaded", () => {
+    // If page reloads then try to transfer songs right after Spotify token was received
     const pending = localStorage.getItem("pendingTransfer");
     if (pending) {
         const { youtube_playlist_id, spotify_playlist_name } = JSON.parse(pending);
 
-        // Clear it so it doesn't re-run
+        // Clear it so it doesn't re-run on every page reload
         localStorage.removeItem("pendingTransfer");
 
         transfer_songs_from_youtube_to_spotify(
@@ -138,21 +139,6 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// async function get_youtube_playlist_video_title(user_input: string) {
-//     try {
-//         const response = await fetch(`http://127.0.0.1:8000/youtube_playlist_id/${user_input}`);
-
-//         if (!response.ok) {
-//             throw new Error("Network response was not ok");
-//         }
-
-//         const data = await response.json();
-//         console.log("Items from backend:", data);
-//     } catch(error) {
-//         console.error("Error fetching items:", error);
-//     }
-// }
-
 async function transfer_songs_from_youtube_to_spotify(youtubeUserInput: string, spotifyUserInput: string) {
     try {
         const response = await fetch(`http://127.0.0.1:8000/youtube-to-spotify`, {
@@ -167,9 +153,10 @@ async function transfer_songs_from_youtube_to_spotify(youtubeUserInput: string, 
             redirect: "follow"
         });
 
+        // Gets Spotify tokens if none has been stored yet
         if (response.status === 401) {
             window.location.href = "http://127.0.0.1:8000/spotify";
-            
+
             return;
         }
 
