@@ -21,6 +21,13 @@ def create_tables():
             avg_time_per_song_field REAL NOT NULL DEFAULT 0
         )          
     """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS genres (
+            genre_name TEXT PRIMARY KEY,
+            genre_count INTEGER NOT NULL
+        ) 
+    """)
     
     connection.commit()
     connection.close()

@@ -1,8 +1,10 @@
+from collections import Counter                    # Help to count genres and place in dict
 from dotenv import load_dotenv                     # Load the keys in the env file
 from fastapi import FastAPI                        # Backend Framework
 from fastapi.middleware.cors import CORSMiddleware # CORS header to allow specify headers only
 from fastapi import Body, Header                   # Helps format data sent to Spotify API
 from fastapi.responses import FileResponse         # Send a specifc HTML, CSS, & JS file to broswer
+from fastapi.responses import JSONResponse         # Send JSON objs to the front-end
 from fastapi.responses import RedirectResponse     # Lets broswer know what URL to go to
 from fastapi.staticfiles import StaticFiles        # Serves a folder's files automatically
 import math                                        # Use the celing method to round
@@ -11,7 +13,8 @@ from pydantic import BaseModel                     # Helps with type check and t
 import requests                                    # HTTP client used to make API requests(For Spotify)
 from urllib.parse import urlencode                 # Helps format URLs(Spotify reqs specifc URL formats)
 
-from backend.youtube_api import get_playlist_videos_title # My own file
+import backend.youtube_api as youtube              # Local file
+import backend.spotify_api as spotify              # Local file
 from backend.database import get_connection, create_tables, set_table_id
 
 
@@ -67,122 +70,48 @@ class YouTubeToSpotifyTransfer(BaseModel):
 def get_youtube_playlist_video_title(
     youtube_playlist_id: str
 ):
-    return get_playlist_videos_title(youtube_playlist_id)
+    return youtube.get_playlist_videos_title(youtube_playlist_id)
 
 
 """ Spotify API Endpoints """
 user_spotify_token = []
 @app.get("/spotify")
 def login_spotify():
-    parameters = {
-        "response_type": "code",
-        "client_id": SPOTIFY_CLIENT_ID,
-        "scope": SPOTIFY_SCOPE,
-        "redirect_uri": SPOTIFY_REDIRECT_URL,
-        "show_dialog": "true",
-    }
-
-    url = "https://accounts.spotify.com/authorize?" + urlencode(parameters)
-
-    return RedirectResponse(url)
+    return RedirectResponse(spotify.login_spotify_helper())
 
 @app.get("/auth/callback")
 def callback(
     code : str
-):
-    payload = {
-        "grant_type": "authorization_code",
-        "code": code,
-        "redirect_uri": SPOTIFY_REDIRECT_URL,
-        "client_id": SPOTIFY_CLIENT_ID,
-        "client_secret": SPOTIFY_CLIENT_SECRET,
-    }
-
-    url = "https://accounts.spotify.com/api/token"
-    response = requests.post(url, data=payload)
-    user_token_data = response.json()
+):  
+    user_spotify_token.append(spotify.callback_helper(code))
     
-    user_spotify_token.append(user_token_data)
     return RedirectResponse("/")
 
 @app.get("/spotify/me")
 def get_spotify_user_account(
     spotfiy_access_token: str = Header(...)
 ):
-    headers = {
-        "Authorization": f"Bearer {spotfiy_access_token}"
-    }
-
-    response = requests.get(
-        "https://api.spotify.com/v1/me",
-        headers = headers
-    )
-
-    return response.json()
+    return spotify.get_spotify_user_account_helper(spotfiy_access_token)
 
 @app.post("/spotify/create-playlist")
 def create_spotify_playlist(
     playlist_name: str,
     spotfiy_access_token: str = Header(...)
 ):
-    headers = {
-        "Authorization": f"Bearer {spotfiy_access_token}",
-        "Content-Type": "application/json"
-    }
-
-    payload = {
-        "name": playlist_name,
-        "description": "Testing Spotify API",
-        "public": False
-    }
-
-    response = requests.post(
-        "https://api.spotify.com/v1/me/playlists",
-        headers = headers,
-        json = payload
-    )
-
-    return response.json()
+    return spotify.create_spotify_playlist_helper(playlist_name, spotfiy_access_token)
 
 @app.get("/spotify/get-playlist-id")
 def get_spotify_playlist_id(
     spotfiy_access_token: str = Header(...)
 ):
-    headers = {
-        "Authorization": f"Bearer {spotfiy_access_token}",
-        "Content-Type": "application/json"
-    }
-
-    response = requests.get(
-        "https://api.spotify.com/v1/me/playlists",
-        headers = headers,
-    )
-
-    return response.json()
+    return spotify.get_spotify_playlist_id_helper(spotfiy_access_token)
 
 @app.get("/spotify/get-song-uri")
 def get_spotify_uri(
     query_song_name: str,
     spotfiy_access_token: str = Header(...)
 ):
-    headers = {
-        "Authorization": f"Bearer {spotfiy_access_token}",
-        "Content-Type": "application/json"
-    }
-
-    params = {
-        "q": query_song_name,
-        "type": "track",
-        "limit": 1
-    }
-
-    response = requests.get(
-        "https://api.spotify.com/v1/search",
-        headers = headers,
-        params = params
-    )
-
-    return response.json()
+    return spotify.get_spotify_uri_helper(query_song_name, spotfiy_access_token)
 
 @app.post("/spotify/add-songs")
 def add_songs_to_spotify_playlist(
@@ -190,22 +119,16 @@ def add_songs_to_spotify_playlist(
     spotify_song_track_URI_obj: SpotifySongURI = Body(...),
     spotfiy_access_token: str = Header(...)
 ):
-    headers = {
-        "Authorization": f"Bearer {spotfiy_access_token}",
-        "Content-Type": "application/json"
-    }
+    return spotify.add_songs_to_spotify_playlist_helper(spotify_playlist_id, 
+                                                        spotify_song_track_URI_obj, 
+                                                        spotfiy_access_token)
 
-    payload = {
-        "uris": spotify_song_track_URI_obj.track_uris
-    }
-
-    response = requests.post(
-        f"https://api.spotify.com/v1/playlists/{spotify_playlist_id}/tracks",
-        headers = headers,
-        json = payload
-    )
-
-    return response.json()
+@app.get("/spotify/get-genres")
+def get_genres_of_songs(
+    spotify_song_track_URI_obj: SpotifySongURI = Body(...),
+    spotfiy_access_token: str = Header(...)
+):
+    return spotify.get_genres_of_songs_helper(spotify_song_track_URI_obj, spotfiy_access_token)
 
 @app.post("/youtube-to-spotify")
 def youtube_to_spotify(
@@ -220,7 +143,12 @@ def youtube_to_spotify(
     for list_index in yt_playlist_video_information:
         yt_songs_title_list.append(list_index)
 
-    # Get Spotify user's auth token
+    # Get Spotify user's auth token, redirect user back to get Spotify token
+    if not user_spotify_token:
+        return JSONResponse(
+            status_code=401,
+            content={"error": "Not authenticated"}
+        )
     user_spotify_token_local = user_spotify_token[0]["access_token"]
 
     # For each song title get its Spotify URI and avoids crashes if Spotify API finds nothing
@@ -249,6 +177,20 @@ def youtube_to_spotify(
         spotfiy_access_token = user_spotify_token_local
     )
 
+    # Get the genres for all songs transferred between playlists
+    genres = get_genres_of_songs(
+        spotify_song_track_URI_obj = SpotifySongURI(track_uris=song_uri_list),
+        spotfiy_access_token = user_spotify_token_local
+    )
+
+    genre_counter = Counter()
+
+    for item in genres:
+        for genre in item["genres"]:
+            genre_counter.update([genre.capitalize()])
+
+    genre_counter = dict(genre_counter)
+
     # Calcualte data
     songs_transferred = len(song_uri_list)
     yt_calls = math.ceil(songs_transferred / 50)
@@ -259,6 +201,8 @@ def youtube_to_spotify(
     # Put data into SQLite database
     connection = get_connection()
     cursor = connection.cursor()
+
+    ## Statistics Data
     cursor.execute(""" 
         UPDATE statistics
         SET
@@ -273,7 +217,6 @@ def youtube_to_spotify(
     )
     )
     cursor.execute("""
-    
         UPDATE statistics
         SET avg_time_per_song_field = 
             CASE
@@ -283,9 +226,24 @@ def youtube_to_spotify(
             END
         WHERE id_field = 1
     """)
+
+    ## Genre Data
+    for genre_key, genre_value in genre_counter.items():
+        cursor.execute("""
+            INSERT INTO genres (genre_name, genre_count)
+            VALUES (?, ?)
+            ON CONFLICT(genre_name)
+            DO UPDATE SET genre_count = genre_count + excluded.genre_count
+        """, (
+            genre_key,
+            genre_value
+        )
+        )
+
     connection.commit()
     connection.close()
 
+    # return genre_counter
     return {
         "success": (
             f"{songs_transferred} songs have been transferred!"
@@ -295,7 +253,8 @@ def youtube_to_spotify(
             f"{avg_time_per_song} Average Time to Transfer a Song!"
         )
     }
-    # Important variables "yt_songs_title_list, user_spotify_token_local, song_uri_list, spotify_playlist_id"
+    # Important variables "yt_songs_title_list, user_spotify_token_local, song_uri_list, spotify_playlist_id, genre_counter"
+
 
 """ Database endpoints """
 @app.get("/database")
@@ -315,6 +274,24 @@ def get_values_database():
     connection.close()
     
     return data
+
+@app.get("/database-genres")
+def get_genres_database():
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute("""
+        SELECT 
+            genre_name,
+            genre_count
+        FROM genres
+        ORDER BY genre_count DESC
+        LIMIT 1
+    """)
+    genre_pair_data = cursor.fetchone()
+    connection.close()
+    
+    return genre_pair_data
+
 
 """ Serve Webpages """
 app.mount("/static", StaticFiles(directory="frontend"), name="static")

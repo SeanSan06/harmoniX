@@ -32,6 +32,7 @@ window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function
         element.classList.add("appear-fade-in");
     });
 }));
+// Statisical data
 function getStatisticsFromDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
         const response = yield fetch("http://127.0.0.1:8000/database");
@@ -59,8 +60,37 @@ window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function
         console.error("Error fetching database data:", error);
     }
 }));
-// Transfer button(gets titles of YouTube videos for now)
+// Genre data
+function getPopularGenreFromDatabase() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const response = yield fetch("http://127.0.0.1:8000/database-genres");
+        const data = yield response.json();
+        return data;
+    });
+}
+window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const genreData = yield getPopularGenreFromDatabase();
+        const popularGenre = document.getElementById('popular-genre');
+        const popularTimePeriod = document.getElementById('popular-time-period');
+        popularGenre.textContent = genreData.genre_name.toString();
+        popularTimePeriod.textContent = genreData.genre_count.toString();
+    }
+    catch (error) {
+        console.error("Error fetching database data:", error);
+    }
+}));
+// Transfer button
 window.addEventListener("DOMContentLoaded", () => {
+    // If page reloads then try to transfer songs right after Spotify token was received
+    const pending = localStorage.getItem("pendingTransfer");
+    if (pending) {
+        const { youtube_playlist_id, spotify_playlist_name } = JSON.parse(pending);
+        // Clear it so it doesn't re-run on every page reload
+        localStorage.removeItem("pendingTransfer");
+        transfer_songs_from_youtube_to_spotify(youtube_playlist_id, spotify_playlist_name);
+    }
+    // Reusable function
     function qs(selector) {
         const el = document.querySelector(selector);
         if (!el)
@@ -71,32 +101,19 @@ window.addEventListener("DOMContentLoaded", () => {
     const spotifyInputTextBox = qs("#spotify_playlist_id_1");
     const button = qs("#youtube_to_spotify_button");
     button === null || button === void 0 ? void 0 : button.addEventListener("click", () => {
-        window.location.href = "http://127.0.0.1:8000/spotify";
-    });
-    button === null || button === void 0 ? void 0 : button.addEventListener("click", () => {
         const youtubeUserInput = youtubeInputTextBox.value;
         const spotifyUserInput = spotifyInputTextBox.value;
         console.log("user typed in box", youtubeUserInput);
         console.log("user typyed in box", spotifyUserInput);
+        // Save user input
+        localStorage.setItem("pendingTransfer", JSON.stringify({
+            youtube_playlist_id: youtubeUserInput,
+            spotify_playlist_name: spotifyUserInput
+        }));
         // get_youtube_playlist_video_title(youtubeUserInput);
         transfer_songs_from_youtube_to_spotify(youtubeUserInput, spotifyUserInput);
     });
 });
-function get_youtube_playlist_video_title(user_input) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const response = yield fetch(`http://127.0.0.1:8000/youtube_playlist_id/${user_input}`);
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            const data = yield response.json(); // Convert FastAPI JSON to JS object
-            console.log("Items from backend:", data);
-        }
-        catch (error) {
-            console.error("Error fetching items:", error);
-        }
-    });
-}
 function transfer_songs_from_youtube_to_spotify(youtubeUserInput, spotifyUserInput) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -108,12 +125,18 @@ function transfer_songs_from_youtube_to_spotify(youtubeUserInput, spotifyUserInp
                 body: JSON.stringify({
                     youtube_playlist_id: youtubeUserInput,
                     spotify_playlist_name: spotifyUserInput
-                })
+                }),
+                redirect: "follow"
             });
+            // Gets Spotify tokens if none has been stored yet
+            if (response.status === 401) {
+                window.location.href = "http://127.0.0.1:8000/spotify";
+                return;
+            }
             if (!response.ok) {
                 throw new Error("Network response was not ok");
             }
-            const data = yield response.json(); // Convert FastAPI JSON to JS object
+            const data = yield response.json();
             console.log("Items from backend:", data);
         }
         catch (error) {
