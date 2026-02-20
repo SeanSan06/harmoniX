@@ -1,5 +1,5 @@
-# HarmoniXfer
-A full stack web based application currently in development that allows users to transfers songs between their Spotify and YouTube playlist automatically.
+# HarmoniX
+A full-stack website currently in development that allows users to transfer songs between their Spotify and YouTube playlists.
 
 ## Pictures of website
 ![Example Image](/frontend/images/homepage.png)
@@ -7,8 +7,8 @@ A full stack web based application currently in development that allows users to
 ## Future features
 - Use Scikit learn to perform machine learning and recommend the user new songs based on songs in the playlist they have added to the website.
 - Design a dashboard that displays more statistical information and lets users use the song suggestion feature.
-- Clean up the color scheme, aiming for a simplistic and iniviting website.
-- Add footer and redesign the header bar. 
+- Clean up the color scheme, aiming for a simplistic and inviting website.
+- Add a footer and redesign the header bar. 
 
 ## How it's made
 Technology used: HTML, CSS, TypeScript, FastAPI, Python, SQLite, YouTube API, and Spotify API.
@@ -17,15 +17,15 @@ Technology used: HTML, CSS, TypeScript, FastAPI, Python, SQLite, YouTube API, an
 
 **CSS**: I am using CSS to create a simplistic and animated website that aims to make the website feel alive.
 
-**TypeScript**: I am using TypeScript to give dynamic functionality to the website. Also so the frontend can communicate with the backend.
+**TypeScript**: I am using TypeScript to give dynamic functionality to the website. Also, so the frontend can communicate with the backend.
 
 **FastAPI with Python**: I am using FastAPI to create a custom API that allows for real-time communication between the frontend and the backend. 
 
-**SQLite**: I am using SQLite as our database, as I wanted a lightweight database that stores simple data such as number of songs transferred.
+**SQLite**: I am using SQLite as our database, as I wanted a lightweight database that stores simple data, such as the number of songs transferred.
 
 **YouTube**: I am using the YouTube API to get all the titles from a specific playlist. The user can simply type in the playlist's ID to get the data from it.
 
-**Spotify**: I am using the Spotify API to get playlists and input songs into them based on what was in a users YouTube playlists.
+**Spotify**: I am using the Spotify API to get playlists and input songs into them based on what was in a user's YouTube playlists.
 
 ## Depenencies
 - pip install fastapi
@@ -39,7 +39,7 @@ Technology used: HTML, CSS, TypeScript, FastAPI, Python, SQLite, YouTube API, an
 
 
 ## What I learned/learning
-I am learning more about using TypeScript and how to make custom objects that are especially useful when sending and recieve data from the backend. I am also learning more about designed more intricate websites with more animated parts. Additionaly, I am learning how to build larger backends that utilize more APIs and librarys.
+I am learning more about using TypeScript and how to make custom objects that are especially useful when sending and recieve data from the backend. I am also learning more about designed more intricate websites with more animated parts. Additionally, I am learning how to build larger backends that utilize more APIs and libraries.
 
 ## Credits
 Thank you to YouTube API and Spotify API for the backend functionality.
